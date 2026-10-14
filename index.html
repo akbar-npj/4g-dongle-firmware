@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSM8916 4G USB Dongle Firmware Portal | OpenWrt & Stock ROMs</title>
+  <meta name="description" content="Download OpenWrt and Stock factory firmware dumps for Qualcomm MSM8916 4G LTE USB dongles (UZ801, UFI001B, Melbon, WhiteStick).">
+  <meta name="theme-color" content="#070D18">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%20width=%22100%22%20height=%22100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
+  <style>
+    :root {
+      --bg-dark: #070D18;
+      --bg-card: #0E182A;
+      --bg-card-hover: #14223A;
+      --border-color: #1A2E4A;
+      --border-hover: #00B0FF;
+      --primary: #00E5FF;
+      --primary-hover: #18FFFF;
+      --success: #00E676;
+      --warning: #FFA600;
+      --danger: #FF5252;
+      --purple: #B388FF;
+      --text-main: #ECEFF1;
+      --text-muted: #90A4AE;
+      --font-mono: 'Consolas', 'JetBrains Mono', 'Fira Code', monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(180deg, #0D1B2E 0%, #070D18 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .badge-header {
+      display: inline-block;
+      background: rgba(0, 229, 255, 0.1);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 750px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .header-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background-color: #121F35;
+      color: var(--text-main);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background-color: #182B48;
+    }
+
+    /* Stats Banner */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 1.2rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.8rem 1.4rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      background: rgba(0, 229, 255, 0.05);
+      border-radius: 6px 6px 0 0;
+    }
+
+    /* Filter Controls */
+    .filter-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #121F35;
+      border: 1px solid var(--border-color);
+      color: #FFFFFF;
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--primary); }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill-btn {
+      background: #121F35;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .pill-btn:hover { color: var(--text-main); border-color: #2E4B75; }
+    .pill-btn.active {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .firmware-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .firmware-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      background: var(--bg-card-hover);
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .badge-openwrt { background: rgba(0, 230, 118, 0.15); color: var(--success); border: 1px solid var(--success); }
+    .badge-stock { background: rgba(68, 138, 255, 0.15); color: #448AFF; border: 1px solid #448AFF; }
+    .badge-edl { background: rgba(179, 136, 255, 0.15); color: var(--purple); border: 1px solid var(--purple); }
+    .badge-baseband { background: rgba(255, 166, 0, 0.15); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-device { background: #1C3352; color: #ECEFF1; border: 1px solid #2A4872; }
+
+    .file-title {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      word-break: break-all;
+      margin-bottom: 0.5rem;
+    }
+
+    .file-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .hash-container {
+      background: #060B14;
+      border: 1px solid #14243A;
+      border-radius: 4px;
+      padding: 0.4rem 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #78909C;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .hash-val {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-right: 0.5rem;
+    }
+
+    .btn-copy-hash {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(180deg, #00B0FF 0%, #0091EA 100%);
+      color: #FFFFFF;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.7rem;
+      border-radius: 6px;
+      transition: filter 0.2s;
+    }
+
+    .btn-download:hover {
+      filter: brightness(1.15);
+    }
+
+    /* Flashing Guide */
+    .guide-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .alert-box {
+      background: rgba(255, 166, 0, 0.1);
+      border-left: 4px solid var(--warning);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-box h4 { color: var(--warning); margin-bottom: 0.3rem; }
+
+    .step-card {
+      background: #091220;
+      border: 1px solid #182C48;
+      border-radius: 6px;
+      padding: 1.2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step-card h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .code-block {
+      background: #050910;
+      border: 1px solid #142236;
+      border-radius: 4px;
+      padding: 0.8rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #80D8FF;
+      overflow-x: auto;
+      position: relative;
+      margin: 0.6rem 0;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      background: #14253E;
+      border: 1px solid #233F67;
+      color: var(--text-main);
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .copy-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #00E676;
+      color: #070D18;
+      font-weight: 800;
+      padding: 0.75rem 1.2rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    #toast.show { opacity: 1; transform: translateY(0); }
+
+    footer {
+      background: #050910;
+      border-top: 1px solid var(--border-color);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    footer a { color: var(--primary); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <span class="badge-header">Qualcomm Snapdragon 410 (MSM8916)</span>
+      <h1>4G Dongle Firmware Portal</h1>
+      <p class="subtitle">
+        High-speed downloads for ImmortalWrt, OpenWrt Linux 6.12, stock ROM dumps, and EDL recovery packages for Qualcomm 4G LTE USB Sticks (UZ801, UFI001B, Melbon, WhiteStick).
+      </p>
+      <div class="header-links">
+        <a class="btn-link" href="https://github.com/akbar-npj/4g-dongle-firmware" target="_blank">
+          📂 Portal Repository
+        </a>
+        <a class="btn-link" href="https://github.com/akbar-npj/immortalwrt/releases/tag/test" target="_blank">
+          🏷️ Source GitHub Release
+        </a>
+        <a class="btn-link" href="https://github.com/akbar-npj/msm8916-openwrt" target="_blank">
+          ⚡ MSM8916 OpenWrt Project
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-val" id="total-count">14</div>
+        <div class="stat-label">Available Packages</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">2.5 GB</div>
+        <div class="stat-label">Total Repository Size</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="total-downloads">778+</div>
+        <div class="stat-label">Total Downloads</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">100% Free</div>
+        <div class="stat-label">Fast GitHub CDN Direct</div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('downloads')">📥 Firmware Downloads</button>
+      <button class="tab-btn" onclick="switchTab('guide')">🛠️ Flashing & EDL Guide</button>
+    </div>
+
+    <!-- TAB 1: DOWNLOADS -->
+    <div id="tab-downloads">
+      <div class="filter-section">
+        <input type="text" id="search-box" class="search-input" placeholder="🔍 Search by device (UZ801, UFI001B, Melbon), kernel (6.12), or file name..." oninput="filterFirmware()">
+        
+        <div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); margin-right: 0.5rem;">Device Filter:</span>
+          <div class="filter-pills" id="device-filters">
+            <button class="pill-btn active" onclick="setDeviceFilter('all')">All Devices</button>
+            <button class="pill-btn" onclick="setDeviceFilter('UZ801')">UZ801</button>
+            <button class="pill-btn" onclick="setDeviceFilter('UFI001B')">UFI001B / UUFI</button>
+            <button class="pill-btn" onclick="setDeviceFilter('Melbon')">Melbon / WhiteStick</button>
+            <button class="pill-btn" onclick="setDeviceFilter('Baseband')">Baseband / Modem</button>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size: 0.85rem; color: var(--text-muted); margin-right: 0.5rem;">Package Type:</span>
+          <div class="filter-pills" id="type-filters">
+            <button class="pill-btn active" onclick="setTypeFilter('all')">All Types</button>
+            <button class="pill-btn" onclick="setTypeFilter('OpenWrt')">OpenWrt / Linux</button>
+            <button class="pill-btn" onclick="setTypeFilter('Stock')">Stock Dumps</button>
+            <button class="pill-btn" onclick="setTypeFilter('EDL')">EDL Bundles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="cards-container">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+
+    <!-- TAB 2: FLASHING GUIDE -->
+    <div id="tab-guide" style="display: none;">
+      <div class="guide-section">
+        <h2 style="font-size: 1.6rem; color: #FFF; margin-bottom: 1rem;">Complete Step-by-Step Flashing Procedure</h2>
+        
+        <div class="alert-box">
+          <h4>⚠️ CRITICAL PRE-REQUISITE (eSIM vs External Physical SIM)</h4>
+          <p>
+            If your 4G USB stick is on stock Android and has an <strong>eSIM + External Physical SIM slot</strong>, you <strong>MUST</strong> log into the stock web admin panel (usually <code>192.168.100.1</code> or <code>192.168.0.1</code>), navigate to network settings, and <strong>select "External SIM" as Default</strong> before flashing. If you flash without doing this, the modem baseband may remain switched to the internal eSIM and fail to detect your physical SIM card.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <h3>Prerequisites & Tools</h3>
+          <p>Make sure you have installed on your computer:</p>
+          <ul style="margin: 0.5rem 0 0.5rem 1.5rem; color: var(--text-muted);">
+            <li><strong>EDL Tool</strong>: <a href="https://github.com/bkerler/edl" target="_blank" style="color: var(--primary);">bkerler/edl</a> (Qualcomm Sahara/Firehose dumper)</li>
+            <li><strong>Android SDK Platform-Tools</strong>: <code>fastboot</code> and <code>adb</code></li>
+            <li>Proper Qualcomm 9008 USB drivers (Linux has native <code>qcserial</code> support)</li>
+          </ul>
+        </div>
+
+        <div class="step-card">
+          <h3>Step 1: Backup Critical Device Partitions via EDL</h3>
+          <p>Place your 4G USB dongle in EDL (Emergency Download 9008) mode (via test points or EDL cable), then backup calibration & IMEI partitions:</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <code>for n in fsc fsg modem modemst1 modemst2 persist sec; do
+    edl r ${n} ${n}.bin
+done</code>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <h3>Step 2: Flash Aboot Bootloader & Enter Fastboot</h3>
+          <p>Write the unlocked <code>aboot.mbn</code> and reboot into fastboot:</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <code>edl w aboot aboot.mbn
+edl e boot
+edl reset</code>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <h3>Step 3: Flash OpenWrt Firmware Partitions</h3>
+          <p>Execute the following commands in Fastboot mode to flash the GPT partition layout and firmware components:</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <code>fastboot flash partition gpt_both0.bin
+fastboot flash aboot aboot.mbn
+fastboot flash hyp hyp.mbn
+fastboot flash rpm rpm.mbn
+fastboot flash sbl1 sbl1.mbn
+fastboot flash tz tz.mbn
+fastboot flash boot boot.bin
+fastboot flash rootfs rootfs.bin</code>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <h3>Step 4: Restore Original Modem & Calibration Partitions</h3>
+          <p>Restore your original IMEI, MAC address, and NVRAM calibrations:</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <code>for n in fsc fsg modem modemst1 modemst2 persist sec; do
+    fastboot flash ${n} ${n}.bin
+done
+
+fastboot reboot</code>
+          </div>
+          <p style="color: var(--success); margin-top: 0.5rem; font-weight: bold;">
+            ✓ Done! Your 4G dongle will now boot into OpenWrt Linux.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toast">Copied to clipboard!</div>
+
+  <footer>
+    <div class="container">
+      <p>
+        Maintained by <a href="https://github.com/akbar-npj" target="_blank">akbar-npj</a> • Powered by <a href="https://github.com/akbar-npj/immortalwrt" target="_blank">ImmortalWrt</a> & <a href="https://github.com/akbar-npj/msm8916-openwrt" target="_blank">MSM8916 OpenWrt</a>
+      </p>
+      <p style="margin-top: 0.4rem; font-size: 0.75rem;">
+        Qualcomm Snapdragon and MSM8916 are trademarks of Qualcomm Incorporated. All packages are hosted directly via GitHub Releases CDN.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Embedded initial data for 100% offline & rate-limit resilience
+    const FIRMWARE_DATA = [
+      {
+        name: "openwrt_6.12_Kernel.bin-ufi001b.tar.xz",
+        size: "111.3 MB",
+        downloads: 0,
+        device: "UFI001B",
+        category: "OpenWrt",
+        desc: "OpenWrt modern Linux Kernel 6.12 image for UFI001B sticks.",
+        hash: "eeaecbd5abb8d1c57887ad1a6774f86d75f626e458aaa2cb73cca67368a0436b",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_6.12_Kernel.bin-ufi001b.tar.xz"
+      },
+      {
+        name: "openwrt_melbon_white.bin.tar.xz",
+        size: "114.2 MB",
+        downloads: 0,
+        device: "Melbon",
+        category: "OpenWrt",
+        desc: "OpenWrt firmware image configured for Melbon / WhiteStick 4G modems.",
+        hash: "ec927bdc5802700b53e690963fb8450697b3d140ffeb3541af9199348d42e8c2",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_melbon_white.bin.tar.xz"
+      },
+      {
+        name: "openwrt_white_melbon_dump.tar.xz",
+        size: "114.5 MB",
+        downloads: 3,
+        device: "Melbon",
+        category: "OpenWrt",
+        desc: "Full partition dump with OpenWrt pre-installed for WhiteStick/Melbon.",
+        hash: "80b64435d1721de4ea59b3c6920aecf18c0155863dfb974922d026dea91e9ab3",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_white_melbon_dump.tar.xz"
+      },
+      {
+        name: "UUFI001B-Openwrt.tar.xz",
+        size: "116.2 MB",
+        downloads: 47,
+        device: "UFI001B",
+        category: "OpenWrt",
+        desc: "ImmortalWrt firmware for UUFI001B dongles with auto network bring-up.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/UUFI001B-Openwrt.tar.xz"
+      },
+      {
+        name: "UZ801-Openwrt.tar.gz",
+        size: "107.2 MB",
+        downloads: 202,
+        device: "UZ801",
+        category: "OpenWrt",
+        desc: "OpenWrt firmware build specifically tuned for UZ801 4G USB modems.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/UZ801-Openwrt.tar.gz"
+      },
+      {
+        name: "openwrt.bin.tar.xz",
+        size: "209.0 MB",
+        downloads: 305,
+        device: "Generic",
+        category: "OpenWrt",
+        desc: "Generic OpenWrt binary package for MSM8916 Snapdragon 410 USB sticks.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt.bin.tar.xz"
+      },
+      {
+        name: "qcom-firmware-r1034.tar.gz",
+        size: "400.4 MB",
+        downloads: 34,
+        device: "Baseband",
+        category: "Baseband",
+        desc: "Official Qualcomm Non-HLOS baseband, modem, and DSP firmware bundle (r1034).",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/qcom-firmware-r1034.tar.gz"
+      },
+      {
+        name: "Melbon-White-Binaries-And-EDL.bin.tar.xz",
+        size: "229.2 MB",
+        downloads: 1,
+        device: "Melbon",
+        category: "EDL",
+        desc: "Complete Melbon White unbricking archive with raw EDL loaders and partition binaries.",
+        hash: "f96d07990aa336ba60927c8281c9fd1e797750a96d7abf6abf3ee31c0689b20a",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Melbon-White-Binaries-And-EDL.bin.tar.xz"
+      },
+      {
+        name: "MelbonWhite-Stock.bin.tar.xz",
+        size: "185.1 MB",
+        downloads: 1,
+        device: "Melbon",
+        category: "Stock",
+        desc: "Original factory Android stock ROM for Melbon White 4G modems.",
+        hash: "59098b86e56fcb4cc0a5a434982e60b6bf24bc3093ebf79157c4e5acde30d5f7",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/MelbonWhite-Stock.bin.tar.xz"
+      },
+      {
+        name: "MelbonWhite-Scatterred.tar.xz",
+        size: "185.7 MB",
+        downloads: 0,
+        device: "Melbon",
+        category: "Stock",
+        desc: "Scattered partition dump of factory Melbon White firmware.",
+        hash: "b3ee3b55df42b689e7f70b34c99c2396c33884bbae177edb4b79b1b19751bdf5",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/MelbonWhite-Scatterred.tar.xz"
+      },
+      {
+        name: "Stock_Ufi001B.Melbon.bin.tar.xz",
+        size: "182.4 MB",
+        downloads: 9,
+        device: "UFI001B",
+        category: "Stock",
+        desc: "Factory stock ROM binary for UFI001B (Melbon hardware variant).",
+        hash: "ecc1004bcd72c22a8824afce7410b12da74658c2dc4f14c4f9ff8c3ef21a8f50",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_Ufi001B.Melbon.bin.tar.xz"
+      },
+      {
+        name: "Stock_dumps.Melbon.tar.xz",
+        size: "180.4 MB",
+        downloads: 9,
+        device: "Melbon",
+        category: "Stock",
+        desc: "Raw stock eMMC partition dumps for Melbon dongles.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_dumps.Melbon.tar.xz"
+      },
+      {
+        name: "Stock_WhiteStick.bin.tar.xz",
+        size: "181.9 MB",
+        downloads: 138,
+        device: "Melbon",
+        category: "Stock",
+        desc: "Clean factory Android stock firmware dump for WhiteStick dongles.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_WhiteStick.bin.tar.xz"
+      },
+      {
+        name: "Stock_dumps_WhiteStick.tar.xz",
+        size: "174.4 MB",
+        downloads: 35,
+        device: "Melbon",
+        category: "Stock",
+        desc: "Partition dumps for WhiteStick MSM8916 modems.",
+        hash: "N/A",
+        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_dumps_WhiteStick.tar.xz"
+      }
+    ];
+
+    let currentDeviceFilter = 'all';
+    let currentTypeFilter = 'all';
+
+    function renderCards(items) {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = '';
+
+      if (items.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+          <h3>No matching firmware packages found</h3>
+          <p style="margin-top: 0.5rem;">Try clearing your search query or filter selection.</p>
+        </div>`;
+        return;
+      }
+
+      items.forEach(pkg => {
+        let badgeTypeClass = 'badge-openwrt';
+        if (pkg.category === 'Stock') badgeTypeClass = 'badge-stock';
+        if (pkg.category === 'EDL') badgeTypeClass = 'badge-edl';
+        if (pkg.category === 'Baseband') badgeTypeClass = 'badge-baseband';
+
+        const hashHtml = pkg.hash && pkg.hash !== 'N/A' 
+          ? `<div class="hash-container">
+              <span class="hash-val" title="SHA256: ${pkg.hash}">SHA256: ${pkg.hash}</span>
+              <button class="btn-copy-hash" onclick="copyToClipboard('${pkg.hash}')">Copy</button>
+             </div>`
+          : '';
+
+        const card = document.createElement('div');
+        card.className = 'firmware-card';
+        card.innerHTML = `
+          <div>
+            <div class="card-badges">
+              <span class="badge ${badgeTypeClass}">${pkg.category}</span>
+              <span class="badge badge-device">${pkg.device}</span>
+            </div>
+            <div class="file-title">${pkg.name}</div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.8rem;">${pkg.desc}</p>
+          </div>
+          <div>
+            <div class="file-meta">
+              <span>📦 <strong>${pkg.size}</strong></span>
+              <span>⬇️ <strong>${pkg.downloads}</strong> downloads</span>
+            </div>
+            ${hashHtml}
+            <a href="${pkg.url}" class="btn-download" download>
+              ⬇️ Download Package
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterFirmware() {
+      const q = document.getElementById('search-box').value.toLowerCase().trim();
+      
+      const filtered = FIRMWARE_DATA.filter(item => {
+        const matchesQuery = !q || item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q) || item.device.toLowerCase().includes(q);
+        const matchesDevice = (currentDeviceFilter === 'all') || 
+                              (currentDeviceFilter === 'UZ801' && item.device === 'UZ801') ||
+                              (currentDeviceFilter === 'UFI001B' && item.device === 'UFI001B') ||
+                              (currentDeviceFilter === 'Melbon' && (item.device === 'Melbon' || item.name.toLowerCase().includes('melbon') || item.name.toLowerCase().includes('white'))) ||
+                              (currentDeviceFilter === 'Baseband' && item.category === 'Baseband');
+        const matchesType = (currentTypeFilter === 'all') || (item.category === currentTypeFilter);
+
+        return matchesQuery && matchesDevice && matchesType;
+      });
+
+      renderCards(filtered);
+    }
+
+    function setDeviceFilter(filter) {
+      currentDeviceFilter = filter;
+      document.querySelectorAll('#device-filters .pill-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(filter) || (filter === 'all' && btn.textContent.includes('All')));
+      });
+      filterFirmware();
+    }
+
+    function setTypeFilter(filter) {
+      currentTypeFilter = filter;
+      document.querySelectorAll('#type-filters .pill-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.includes(filter) || (filter === 'all' && btn.textContent.includes('All')));
+      });
+      filterFirmware();
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tab-downloads').style.display = (tab === 'downloads') ? 'block' : 'none';
+      document.getElementById('tab-guide').style.display = (tab === 'guide') ? 'block' : 'none';
+      document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', (tab === 'downloads' && idx === 0) || (tab === 'guide' && idx === 1));
+      });
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('SHA256 Copied to clipboard!');
+      });
+    }
+
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Commands copied to clipboard!');
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // Try fetching live release stats from GitHub API
+    async function syncLiveGithubData() {
+      try {
+        const res = await fetch('https://api.github.com/repos/akbar-npj/immortalwrt/releases/tags/test');
+        if (!res.ok) return;
+        const data = await res.json();
+        let totalDls = 0;
+        
+        data.assets.forEach(asset => {
+          totalDls += asset.download_count;
+          const match = FIRMWARE_DATA.find(f => f.name === asset.name);
+          if (match) {
+            match.downloads = asset.download_count;
+            match.url = asset.browser_download_url;
+            match.size = (asset.size / (1024 * 1024)).toFixed(1) + ' MB';
+          }
+        });
+        
+        document.getElementById('total-downloads').innerText = totalDls + '+';
+        renderCards(FIRMWARE_DATA);
+      } catch (err) {
+        console.log('GitHub API offline or rate-limited; using pre-cached static metadata.');
+      }
+    }
+
+    // Initial render
+    renderCards(FIRMWARE_DATA);
+    syncLiveGithubData();
+  </script>
+</body>
+</html>
