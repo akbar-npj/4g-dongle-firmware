@@ -1,0 +1,7 @@
+# Ignore downloaded firmware binaries
+downloads/
+*.tar.xz
+*.tar.gz
+*.bin
+*.zip
+*.iso

@@ -431,14 +431,14 @@
       <span class="badge-header">Qualcomm Snapdragon 410 (MSM8916)</span>
       <h1>4G Dongle Firmware Portal</h1>
       <p class="subtitle">
-        High-speed downloads for ImmortalWrt, OpenWrt Linux 6.12, stock ROM dumps, and EDL recovery packages for Qualcomm 4G LTE USB Sticks (UZ801, UFI001B, Melbon, WhiteStick).
+        Independent permanent repository for OpenWrt Linux 6.12, stock ROM dumps, and EDL recovery packages for Qualcomm 4G LTE USB Sticks (UZ801, UFI001B, Melbon, WhiteStick).
       </p>
       <div class="header-links">
+        <a class="btn-link" href="https://github.com/akbar-npj/4g-dongle-firmware/releases/tag/v1.0.0" target="_blank">
+          🏷️ Dedicated v1.0.0 Release
+        </a>
         <a class="btn-link" href="https://github.com/akbar-npj/4g-dongle-firmware" target="_blank">
           📂 Portal Repository
-        </a>
-        <a class="btn-link" href="https://github.com/akbar-npj/immortalwrt/releases/tag/test" target="_blank">
-          🏷️ Source GitHub Release
         </a>
         <a class="btn-link" href="https://github.com/akbar-npj/msm8916-openwrt" target="_blank">
           ⚡ MSM8916 OpenWrt Project
@@ -460,11 +460,11 @@
       </div>
       <div class="stat-card">
         <div class="stat-val" id="total-downloads">778+</div>
-        <div class="stat-label">Total Downloads</div>
+        <div class="stat-label">Downloads</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">100% Free</div>
-        <div class="stat-label">Fast GitHub CDN Direct</div>
+        <div class="stat-val">Self-Hosted</div>
+        <div class="stat-label">Permanent GitHub Release</div>
       </div>
     </div>
 
@@ -591,16 +591,18 @@ fastboot reboot</code>
   <footer>
     <div class="container">
       <p>
-        Maintained by <a href="https://github.com/akbar-npj" target="_blank">akbar-npj</a> • Powered by <a href="https://github.com/akbar-npj/immortalwrt" target="_blank">ImmortalWrt</a> & <a href="https://github.com/akbar-npj/msm8916-openwrt" target="_blank">MSM8916 OpenWrt</a>
+        Maintained by <a href="https://github.com/akbar-npj" target="_blank">akbar-npj</a> • Hosted on <a href="https://github.com/akbar-npj/4g-dongle-firmware" target="_blank">4g-dongle-firmware</a> • Associated with <a href="https://github.com/akbar-npj/msm8916-openwrt" target="_blank">MSM8916 OpenWrt</a>
       </p>
       <p style="margin-top: 0.4rem; font-size: 0.75rem;">
-        Qualcomm Snapdragon and MSM8916 are trademarks of Qualcomm Incorporated. All packages are hosted directly via GitHub Releases CDN.
+        Qualcomm Snapdragon and MSM8916 are trademarks of Qualcomm Incorporated. All packages are hosted in the 4g-dongle-firmware repository.
       </p>
     </div>
   </footer>
 
   <script>
-    // Embedded initial data for 100% offline & rate-limit resilience
+    const RELEASE_BASE = "https://github.com/akbar-npj/4g-dongle-firmware/releases/download/v1.0.0/";
+
+    // Embedded data pointing directly to akbar-npj/4g-dongle-firmware/releases/tag/v1.0.0
     const FIRMWARE_DATA = [
       {
         name: "openwrt_6.12_Kernel.bin-ufi001b.tar.xz",
@@ -610,7 +612,7 @@ fastboot reboot</code>
         category: "OpenWrt",
         desc: "OpenWrt modern Linux Kernel 6.12 image for UFI001B sticks.",
         hash: "eeaecbd5abb8d1c57887ad1a6774f86d75f626e458aaa2cb73cca67368a0436b",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_6.12_Kernel.bin-ufi001b.tar.xz"
+        url: RELEASE_BASE + "openwrt_6.12_Kernel.bin-ufi001b.tar.xz"
       },
       {
         name: "openwrt_melbon_white.bin.tar.xz",
@@ -620,77 +622,77 @@ fastboot reboot</code>
         category: "OpenWrt",
         desc: "OpenWrt firmware image configured for Melbon / WhiteStick 4G modems.",
         hash: "ec927bdc5802700b53e690963fb8450697b3d140ffeb3541af9199348d42e8c2",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_melbon_white.bin.tar.xz"
+        url: RELEASE_BASE + "openwrt_melbon_white.bin.tar.xz"
       },
       {
         name: "openwrt_white_melbon_dump.tar.xz",
         size: "114.5 MB",
-        downloads: 3,
+        downloads: 0,
         device: "Melbon",
         category: "OpenWrt",
         desc: "Full partition dump with OpenWrt pre-installed for WhiteStick/Melbon.",
         hash: "80b64435d1721de4ea59b3c6920aecf18c0155863dfb974922d026dea91e9ab3",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt_white_melbon_dump.tar.xz"
+        url: RELEASE_BASE + "openwrt_white_melbon_dump.tar.xz"
       },
       {
         name: "UUFI001B-Openwrt.tar.xz",
         size: "116.2 MB",
-        downloads: 47,
+        downloads: 0,
         device: "UFI001B",
         category: "OpenWrt",
         desc: "ImmortalWrt firmware for UUFI001B dongles with auto network bring-up.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/UUFI001B-Openwrt.tar.xz"
+        hash: "c1114d7df09dfbaba3b79d87cc560cd68f41fa5623ce9523313f0b0dff1ad41a",
+        url: RELEASE_BASE + "UUFI001B-Openwrt.tar.xz"
       },
       {
         name: "UZ801-Openwrt.tar.gz",
         size: "107.2 MB",
-        downloads: 202,
+        downloads: 0,
         device: "UZ801",
         category: "OpenWrt",
         desc: "OpenWrt firmware build specifically tuned for UZ801 4G USB modems.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/UZ801-Openwrt.tar.gz"
+        hash: "a4b3fc030788fee02c3d24e0c18c047633397c72993054eb2d3fc095602adaa1",
+        url: RELEASE_BASE + "UZ801-Openwrt.tar.gz"
       },
       {
         name: "openwrt.bin.tar.xz",
         size: "209.0 MB",
-        downloads: 305,
+        downloads: 0,
         device: "Generic",
         category: "OpenWrt",
         desc: "Generic OpenWrt binary package for MSM8916 Snapdragon 410 USB sticks.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/openwrt.bin.tar.xz"
+        hash: "94a46be8b539f696439c370f2d6a3426bb28de56138419d5efce92370049c716",
+        url: RELEASE_BASE + "openwrt.bin.tar.xz"
       },
       {
         name: "qcom-firmware-r1034.tar.gz",
         size: "400.4 MB",
-        downloads: 34,
+        downloads: 0,
         device: "Baseband",
         category: "Baseband",
         desc: "Official Qualcomm Non-HLOS baseband, modem, and DSP firmware bundle (r1034).",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/qcom-firmware-r1034.tar.gz"
+        hash: "3a1244ac749947b968838216427da835effc3a9673cc4b76eb5a024f3f8937c2",
+        url: RELEASE_BASE + "qcom-firmware-r1034.tar.gz"
       },
       {
         name: "Melbon-White-Binaries-And-EDL.bin.tar.xz",
         size: "229.2 MB",
-        downloads: 1,
+        downloads: 0,
         device: "Melbon",
         category: "EDL",
         desc: "Complete Melbon White unbricking archive with raw EDL loaders and partition binaries.",
         hash: "f96d07990aa336ba60927c8281c9fd1e797750a96d7abf6abf3ee31c0689b20a",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Melbon-White-Binaries-And-EDL.bin.tar.xz"
+        url: RELEASE_BASE + "Melbon-White-Binaries-And-EDL.bin.tar.xz"
       },
       {
         name: "MelbonWhite-Stock.bin.tar.xz",
         size: "185.1 MB",
-        downloads: 1,
+        downloads: 0,
         device: "Melbon",
         category: "Stock",
         desc: "Original factory Android stock ROM for Melbon White 4G modems.",
         hash: "59098b86e56fcb4cc0a5a434982e60b6bf24bc3093ebf79157c4e5acde30d5f7",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/MelbonWhite-Stock.bin.tar.xz"
+        url: RELEASE_BASE + "MelbonWhite-Stock.bin.tar.xz"
       },
       {
         name: "MelbonWhite-Scatterred.tar.xz",
@@ -700,47 +702,47 @@ fastboot reboot</code>
         category: "Stock",
         desc: "Scattered partition dump of factory Melbon White firmware.",
         hash: "b3ee3b55df42b689e7f70b34c99c2396c33884bbae177edb4b79b1b19751bdf5",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/MelbonWhite-Scatterred.tar.xz"
+        url: RELEASE_BASE + "MelbonWhite-Scatterred.tar.xz"
       },
       {
         name: "Stock_Ufi001B.Melbon.bin.tar.xz",
         size: "182.4 MB",
-        downloads: 9,
+        downloads: 0,
         device: "UFI001B",
         category: "Stock",
         desc: "Factory stock ROM binary for UFI001B (Melbon hardware variant).",
         hash: "ecc1004bcd72c22a8824afce7410b12da74658c2dc4f14c4f9ff8c3ef21a8f50",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_Ufi001B.Melbon.bin.tar.xz"
+        url: RELEASE_BASE + "Stock_Ufi001B.Melbon.bin.tar.xz"
       },
       {
         name: "Stock_dumps.Melbon.tar.xz",
         size: "180.4 MB",
-        downloads: 9,
+        downloads: 0,
         device: "Melbon",
         category: "Stock",
         desc: "Raw stock eMMC partition dumps for Melbon dongles.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_dumps.Melbon.tar.xz"
+        hash: "5adb18259fe494e322598591e9178e4061e89aef0968e9ff71052f79aa0a0e16",
+        url: RELEASE_BASE + "Stock_dumps.Melbon.tar.xz"
       },
       {
         name: "Stock_WhiteStick.bin.tar.xz",
         size: "181.9 MB",
-        downloads: 138,
+        downloads: 0,
         device: "Melbon",
         category: "Stock",
         desc: "Clean factory Android stock firmware dump for WhiteStick dongles.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_WhiteStick.bin.tar.xz"
+        hash: "fd2ada1d4a612f182034e9c245e39e0acade0c691dc9065956203b1ef0c54218",
+        url: RELEASE_BASE + "Stock_WhiteStick.bin.tar.xz"
       },
       {
         name: "Stock_dumps_WhiteStick.tar.xz",
         size: "174.4 MB",
-        downloads: 35,
+        downloads: 0,
         device: "Melbon",
         category: "Stock",
         desc: "Partition dumps for WhiteStick MSM8916 modems.",
-        hash: "N/A",
-        url: "https://github.com/akbar-npj/immortalwrt/releases/download/test/Stock_dumps_WhiteStick.tar.xz"
+        hash: "80ec45588b7a4da8a5222292ea1e0bd515fe86ca4d684213c702352ea2086ead",
+        url: RELEASE_BASE + "Stock_dumps_WhiteStick.tar.xz"
       }
     ];
 
@@ -860,10 +862,10 @@ fastboot reboot</code>
       setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    // Try fetching live release stats from GitHub API
+    // Live sync from akbar-npj/4g-dongle-firmware/releases/tags/v1.0.0
     async function syncLiveGithubData() {
       try {
-        const res = await fetch('https://api.github.com/repos/akbar-npj/immortalwrt/releases/tags/test');
+        const res = await fetch('https://api.github.com/repos/akbar-npj/4g-dongle-firmware/releases/tags/v1.0.0');
         if (!res.ok) return;
         const data = await res.json();
         let totalDls = 0;
@@ -875,13 +877,16 @@ fastboot reboot</code>
             match.downloads = asset.download_count;
             match.url = asset.browser_download_url;
             match.size = (asset.size / (1024 * 1024)).toFixed(1) + ' MB';
+            if (asset.digest) {
+              match.hash = asset.digest.replace('sha256:', '');
+            }
           }
         });
         
-        document.getElementById('total-downloads').innerText = totalDls + '+';
+        document.getElementById('total-downloads').innerText = totalDls;
         renderCards(FIRMWARE_DATA);
       } catch (err) {
-        console.log('GitHub API offline or rate-limited; using pre-cached static metadata.');
+        console.log('GitHub API rate-limited; using pre-cached static metadata.');
       }
     }
 
